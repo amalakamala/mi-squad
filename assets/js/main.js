@@ -1,10 +1,13 @@
+var arr = [];
+var arrComentarios = [];
+
 function Squad(nombre,edad,hobbies){
 	this.nombre = nombre;
 	this.edad = edad;
   	this.hobbies = hobbies;
 }
 
-var arr = [];
+
 
 var Marcela = new Squad("Marcela Cabello",31,["Cantar", "Yoga", "Cocinar"]);
 arr.push(Marcela);
@@ -30,11 +33,18 @@ arr.push(Mariela);
 var Valentina = new Squad("Valentina Amala Kamala",29,["Bordar", "Tejer","Dormir"]);
 arr.push(Valentina);
 
+
+
 var escribir = document.getElementById('mi-squad');
 
 arr.forEach(function(el){
 
-    escribir.innerHTML +=  '<b>Nombre:</b> ' + el.nombre + '<br><b>Edad:</b> ' + el.edad + '<br><b>Hobbies:</b><br>';
-    var lista = '<ul> ' + el.hobbies.forEach(function(h){return (escribir.innerHTML += "<li>" + h + "</li>")}) + '</ul>';
-    escribir.innerHTML += '<br>' ;
+	var squadAux = document.createElement("div");
+	squadAux.innerHTML +=  '<b>Nombre:</b> ' + el.nombre + '<br><b>Edad:</b> ' + el.edad + '<br><b>Hobbies:</b><br>';
+		
+	var squadAux2 = document.createElement("li");
+	squadAux2.innerHTML = el.hobbies.forEach(function(h){squadAux.innerHTML += "<li>" + h + "</li>"});
+
+	escribir.appendChild(squadAux);
+
 })
