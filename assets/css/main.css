@@ -1,0 +1,30 @@
+body {
+	font-weight: 300;	
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: #DCDCDC;
+}
+
+h3{
+	line-height: 1;
+	font-weight: 500;
+	color : #ffca39;	
+}
+
+h1{
+	line-height: 0.1;
+	color : #ffca39;
+	text-shadow: -3px -3px 5px #000000;
+}
+
+.seleccion{
+	background-color: #ffca39;
+	border-radius: 2em 2em ;
+	width: 20%;
+	margin: 0 auto;
+	height: 1010px;
+	padding: 30px;
+}
+
+li{
+	padding-right: 30px;
+}
