@@ -1,24 +1,25 @@
 var arr = [];
 var arrComentarios = [];
 
-function Squad(nombre,edad,hobbies,id){
+function Squad(nombre,edad,hobbies,id,image){
 	this.nombre = nombre;
 	this.edad = edad;
   	this.hobbies = hobbies;
   	this.id = id;
+  	this.image = image;
 }
 
 
 function mySquad(){
 
-	var Marcela = new Squad("Marcela Cabello",31,["Cantar", "Yoga", "Cocinar"],1);
-	var Marcelissa = new Squad("Melissa Pacheco",25,["Dormir", "Comer", "Matilda"],2);
-	var Paulina = new Squad("Paulina Aros",28,["Hacer libretas", "Acariciar Gatos", "Manicure"],3);
-	var Karla = new Squad("Karla Jeria",35,["Comer Chocolates", "Viajar","Ir al Cine"],4);
-	var Tanya = new Squad("Tanya Ramirez",29,["Gatos", "Viajar","Tomar tecito a las 4"],5);
-	var Paula = new Squad("Paula Ponce",28,["Música", "Aves","Heroes of the storm"],6);
-	var Mariela = new Squad("Mariela Cubillos",36,["Tejer", "Comer chocolate","Cocinar"],7);
-	var Valentina = new Squad("Valentina Amala Kamala",29,["Bordar", "Tejer","Dormir"],8);
+	var Marcela = new Squad("Marcela Cabello",31,["Cantar", "Yoga", "Cocinar"],1,"assets/img/perfil1.jpg");
+	var Marcelissa = new Squad("Melissa Pacheco",25,["Dormir", "Comer", "Matilda"],2,"assets/img/perfil1.jpg");
+	var Paulina = new Squad("Paulina Aros",28,["Hacer libretas", "Acariciar Gatos", "Manicure"],3,"assets/img/perfil1.jpg");
+	var Karla = new Squad("Karla Jeria",35,["Comer Chocolates", "Viajar","Ir al Cine"],4,"assets/img/perfil1.jpg");
+	var Tanya = new Squad("Tanya Ramirez",29,["Gatos", "Viajar","Tomar tecito a las 4"],5,"assets/img/perfil1.jpg");
+	var Paula = new Squad("Paula Ponce",28,["Música", "Aves","Heroes of the storm"],6,"assets/img/perfil1.jpg");
+	var Mariela = new Squad("Mariela Cubillos",36,["Tejer", "Comer chocolate","Cocinar"],7,"assets/img/perfil1.jpg");
+	var Valentina = new Squad("Valentina Amala Kamala",29,["Bordar", "Tejer","Dormir"],8,"assets/img/perfil1.jpg");
 
 	arr.push(Marcela,Marcelissa,Paulina,Karla,Tanya,Paula,Mariela,Valentina);
 
@@ -31,6 +32,10 @@ var escribir = document.getElementById('mi-squad');
 function escribeEnHTML(){
 	arr.forEach(function(el){
 		var squadAux = document.createElement("div");
+		squadAux.setAttribute("class","d-cuadro");
+
+		squadAux.innerHTML += "<img src= '" + el.image + "' >" + "<br>" ;
+
 		squadAux.innerHTML +=  '<b>Nombre:</b> ' + el.nombre + '<br><b>Edad:</b> ' + el.edad + '<br><b>Hobbies:</b><br>';
 						
 		var squadAux2 = document.createElement("ul");

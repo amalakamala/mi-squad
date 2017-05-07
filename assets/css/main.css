@@ -25,9 +25,7 @@ h1{
 
 .el-boton{
 	background-color: #fefefe;
-	width: 3%;
-	margin: 285px;
-	height: 5px;
+	margin: 78%;
 	padding: 5px;
 	font-weight: 400;
 	text-transform: uppercase;
@@ -42,6 +40,7 @@ h1{
 	margin: 0 auto;
 	padding: 30px;
 	background-color: #8CDCD2;
+	vertical-align: middle;
 
 }
 
@@ -51,14 +50,20 @@ h1{
 	background-color: #0f7e8f;
 }
 
+.d-cuadro{
+	vertical-align: middle;
+}
+
 li{
 	padding-right: 30px;
 }
 
 textarea{
-	width: 360px;
-	height: 50px;
+	width: 100%;
+	height: 60px;
 	background-color: #E8E8E8;
 	border: 1px solid #9C9C9C;
+
 }
+
 
