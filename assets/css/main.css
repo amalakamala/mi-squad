@@ -25,6 +25,7 @@ h1{
 
 }
 
+
 .foto-perfil{
 	box-shadow: 5px 5px 5px #0f7e8f;
 }
@@ -43,19 +44,20 @@ h1{
 	background-color: #fefefe;
 	padding-right: 5px;
 	padding-left: 5px;
-	padding-top: 1px;
-	padding-bottom: 2px;
 	border-radius: 0.5em 0.5em;
 	color: #e66560;
 	font-weight: 200;
 }
 
 
+div .caja-div-like{
+	padding-bottom: 5px;
+}
+
 .el-contador{
 	color: #fefefe;
 	font-weight: 200;
 }
-
 
 
 .seleccion{
@@ -91,5 +93,4 @@ textarea{
 	height: 60px;
 	background-color: #E8E8E8;
 	border: 1px solid #9C9C9C;
-
 }

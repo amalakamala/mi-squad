@@ -13,20 +13,11 @@ function Squad(nombre,edad,hobbies,id,image){
 }
 
 
-/*
-Para que se cuenten los like vi en una web que se crea un objeto contructor, 
-pero contenia el atributo 'data-bind' en las etiquetas para que incrementar el valor.
-Hubo cosas que intente comprender, pero solo pude sumar un número al like del primer comentario.
-
-Adjunto link donde vi ese forma de crear el boton y hacer una suma:
-http://jsfiddle.net/rniemeyer/3Lqsx/
-*/
-function LikeClick(){
-	this.numberOfClicks = ko.observable(0);
-	this.registerClick = function() {
-        this.numberOfClicks(this.numberOfClicks() + 1);
-    };
-}
+function Comentario(id_miembro, el_comentario, like){
+  this.id_miembro = id_miembro;
+  this.el_comentario = el_comentario;
+  this.like = like;
+ }
 
 
 //Se construye el Squad
@@ -51,133 +42,127 @@ var escribir = document.getElementById('mi-squad');
 
 
 //Function que crea todos los elementos: foto, datos, cuadro de comentario, boton y comentarios
-function escribeEnHTML(){
+function escribeEnHTML(el){
 	arr.forEach(function(el){
+
+		//TEXTO YA ESCRITO
+		var contenedorTexto = document.createElement("div");
+
+		//Foto Perfil
 		var imgAux = document.createElement("div");
 		imgAux.innerHTML += "<img class='foto-perfil' src= '" + el.image + "' >" + "<br>";
 		escribir.appendChild(imgAux);
 
+		//Nombre Apellido Edad Hobbies
 		var squadAux = document.createElement("div");
 		squadAux.innerHTML +=  '<b>Nombre:</b> ' + el.nombre + '<br><b>Edad:</b> ' + el.edad + '<br><b>Hobbies:</b><br>';
 						
+		//Detalle Hobbies
 		var squadAux2 = document.createElement("ul");
 		squadAux2.innerHTML = el.hobbies.forEach(function(h){squadAux.innerHTML += "<li>" + h + "</li>"});
 
 		squadAux.innerHTML += "<br>";
 
+		contenedorTexto.appendChild(squadAux);
+
+
+
+
+
+		//ESCRIBIR COMENTARIOS
+		var losComentarios = document.createElement("section");
+		losComentarios.id = "seccion" + el.id;
+
+		//Text Area
 		var comAux = document.createElement("textarea");
 		comAux.setAttribute("class", "caja-comentario");
-		comAux.setAttribute("id", el.id );
+		comAux.id = "text-area" + el.id;
 		comAux.setAttribute("type", "text");
 		comAux.setAttribute("placeholder","Escribe Comentario");
-		squadAux.appendChild(comAux);
+		losComentarios.appendChild(comAux);
 
-		squadAux.innerHTML += "<br><br>";
+		losComentarios.innerHTML += "<br><br>";
 
+		//BOTON COMENTAR
 		var botonAux = document.createElement("a");
 		botonAux.innerHTML += "Comentar";
-		botonAux.setAttribute("onclick", "elBoton(this.comAux,this," + el.id + ", this.divTextoAux)");
-		botonAux.setAttribute("id", "boton");
+		botonAux.id = "boton-comentar" + el.id;
 		botonAux.setAttribute("class", "el-boton");
-		squadAux.appendChild(botonAux); 
-
-		squadAux.innerHTML += "<br><br>";
-
-		var divTextoAux = document.createElement("div");
-		divTextoAux.setAttribute("class", "comentarios");
-		divTextoAux.setAttribute("id", el.id);
-
-		squadAux.appendChild(divTextoAux);
+		botonAux.setAttribute("onclick", "elBoton(" + el.id + ")");
+		losComentarios.appendChild(botonAux); 
 
 
 
-		squadAux.innerHTML += "<br><br>";
-		squadAux.innerHTML += "<hr/>";
-		squadAux.innerHTML += "<br>";
+		var contenedorComentarios = document.createElement("div")
+		contenedorComentarios.id = "contenedor" + el.id;
+		losComentarios.appendChild(contenedorComentarios);
+		contenedorComentarios.setAttribute("class","caja-final")
+
+		losComentarios.innerHTML += "<br><br>";
+
+		losComentarios.innerHTML += "<hr>";
+
+		losComentarios.innerHTML += "<br><br>";
 
 
-		escribir.appendChild(squadAux);
+
+		escribir.appendChild(contenedorTexto);
+		escribir.appendChild(losComentarios);
+
 	});
 }
 
-//Var contador like
-var elNum =0;
-
 
 //Function para boton de comentarios
-function elBoton(comAux,botonAux,elId,divTextoAux){
+function elBoton(elId){
+	
 
-	comAux = document.getElementById(elId).value;
-	divTextoAux = document.getElementsByClassName("comentarios");
+	var delTextArea = document.getElementById("text-area" + elId).value;
+	document.getElementById("text-area"+ elId).value= "";
 
-	var recorre = arr.filter(function(r){
-		return r.id == elId;
-	})
 
 	var likeCaja = document.createElement("div");
+	likeCaja.id = "comentario-div" + elId;
 	likeCaja.setAttribute("class", "caja-div-like");
-	likeCaja.setAttribute("align", "right");	
-	likeCaja.setAttribute("id", arrComentarios.length + 1);
 
-	var botonLike = document.createElement("a");
-	botonLike.innerHTML += "❤";
+
+
+	var post = document.createTextNode(delTextArea);
+	var contenedorDePost = document.createElement('p');
+	contenedorDePost.appendChild(post);
+
+	if(delTextArea == ""){
+		alert('Rellena el campo');
+        return false;
+	}	
+
+	var botonLike = document.createElement("span");
+	var botonLikeCo = document.createTextNode("❤");
+	botonLike.appendChild(botonLikeCo)
 	botonLike.setAttribute("class", "el-boton-like");
-	botonLike.setAttribute("id", arrComentarios.length + 1);
-	botonLike.setAttribute("onclick", "contLike('"+ elNum +"')");
-
-
-	var contador = document.createElement("a")
-	contador.innerHTML += " ";
-	var numEdit = document.createTextNode(elNum);
-	contador.appendChild(numEdit)
-	contador.setAttribute("type", "number");
+	botonLike.setAttribute("id", "boton");
+	var click = 0;
+	var contador = document.createElement("span");
 	contador.setAttribute("class", "el-contador");
-	contador.setAttribute("id", "num");
+	botonLike.addEventListener("click", function contadorLikes(){
+        click += 1;
+        contador.innerHTML = " " + click;
+    });
 
-	botonLike.appendChild(contador);
-
+	likeCaja.innerHTML+= delTextArea + " ";
 	likeCaja.appendChild(botonLike);
-
-	var losCom = document.createElement("div");
-	losCom.setAttribute("id", elId);
-	losCom.innerHTML = "<b>~</b> " + document.getElementById(elId).value;
+	likeCaja.appendChild(contador);
 
 
-	if(recorre[0].id == elId && comAux != ""){
-		arrComentarios.push(losCom);
-		divTextoAux[recorre[0].id - 1].appendChild(losCom);
-		divTextoAux[recorre[0].id - 1].appendChild(likeCaja);
-		divTextoAux[recorre[0].id - 1].innerHTML += "<br><br>";
-		document.getElementById(elId).value = "";
 
-	//divTextoAux[recorre[0].id - 1].innerHTML += "<button onclick='contLike(contador)'> ♥ "+ contador +"</button><br>";
-	}
+	var conFinal = document.getElementById("contenedor"+elId);
+	conFinal.appendChild(likeCaja);
+	(document.getElementById("text-area" + elId).value).innerHTML = "";
 
+
+	var coment = new Comentario(elId,delTextArea,contador);
+	arrComentarios.push(coment);
 }
-
-	/*
-	console.log(recorre[0].id);
-	console.log(divTextoAux[recorre[0].id]);
-	console.log(elId);	
-	*/
-
-
-//Function del contador de like
-function contLike(elNum,elId){
-var igualC = document.getElementById(arrComentarios.length + 1).value;	
-var contadorAux = document.getElementById("num");
-
-console.log(contadorAux);
-
-var recorreLike = arrComentarios.filter(function(c){
-	return c.id = igualC;
-})
-		var elNum = parseInt(elNum);
-		var contador = elNum + 1;
-
-
-	return contadorAux.innerHTML = " " + contador;
-}	
 
 
 //Llama a function principal.
